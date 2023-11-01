@@ -5,13 +5,14 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { ConfigModule } from '@nestjs/config';
 
 @Module({
-  imports: [ConfigModule.forRoot({
-    envFilePath : '.env',
-    isGlobal : true,
-  }),
-  MongooseModule.forRoot(process.env.MONGODB_URI)
-],
-  controllers: [AppController],
-  providers: [AppService],
+    imports: [
+        ConfigModule.forRoot({
+            envFilePath: '.env',
+            isGlobal: true,
+        }),
+        MongooseModule.forRoot(process.env.MONGODB_URI),
+    ],
+    controllers: [AppController],
+    providers: [AppService],
 })
 export class AppModule {}
