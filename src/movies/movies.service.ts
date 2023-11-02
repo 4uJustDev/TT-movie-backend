@@ -32,4 +32,8 @@ export class MoviesService {
     async removeAll() {
         return this.filmModel.deleteMany({});
     }
+
+    async addActorToMovie(id, actorId) {
+        return this.filmModel.findByIdAndUpdate(id, { $push: { actors: actorId } });
+    }
 }
