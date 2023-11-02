@@ -4,6 +4,7 @@ import { AppService } from './app.service';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ConfigModule } from '@nestjs/config';
 import { MoviesModule } from './movies/movies.module';
+import { ActorsModule } from './actors/actors.module';
 
 @Module({
     imports: [
@@ -13,6 +14,7 @@ import { MoviesModule } from './movies/movies.module';
         }),
         MongooseModule.forRoot(process.env.MONGODB_URI),
         MoviesModule,
+        ActorsModule,
     ],
     controllers: [AppController],
     providers: [AppService],
