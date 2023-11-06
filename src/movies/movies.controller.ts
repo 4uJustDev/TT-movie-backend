@@ -1,8 +1,10 @@
-import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Patch, Post, Put } from '@nestjs/common';
 import { MoviesService } from './movies.service';
 import { Movie } from './schemas/movie.schema';
 import { CreateMovieDto } from './dto/create-movie.dto';
 import { UpdateMovieDto } from './dto/update-movie.dto';
+import { ObjectId } from 'mongoose';
+import { addMovieToActor } from 'src/actors/dto/addMovieToActor.dto';
 
 @Controller('movies')
 export class MoviesController {
@@ -35,5 +37,10 @@ export class MoviesController {
     @Delete()
     removeDocuments() {
         return this.movieService.removeAll();
+    }
+
+    @Patch(':id')
+    addActor(@Param('id') id: ObjectId, @Body() dto: addMovieToActor) {
+        return this.movieService.addActorToMovie(id, dto.actors);
     }
 }
