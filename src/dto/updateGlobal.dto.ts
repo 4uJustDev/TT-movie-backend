@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 
-export class addMovieToActor {
+export class updateGlobalDto {
     movies: mongoose.Schema.Types.ObjectId;
     actors: mongoose.Schema.Types.ObjectId;
 }

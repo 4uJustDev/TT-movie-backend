@@ -1,12 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import mongoose, { Model, ObjectId } from 'mongoose';
-import { addMovieToActor } from './dto/addMovieToActor.dto';
-import { CreateActorDto } from './dto/create-actor.dto';
+import { updateGlobalDto } from 'src/dto/updateGlobal.dto';
+import { createActorDto } from './dto/createActor.dto';
 import { Actor, ActorDocument } from './schemas/actor.schema';
 
 @Injectable()
-export class ActorsService {
+export class ActorService {
     constructor(@InjectModel(Actor.name) private actorModel: Model<ActorDocument>) {}
 
     async getAll(): Promise<Actor[]> {
@@ -17,9 +17,8 @@ export class ActorsService {
         return await this.actorModel.findById(id).populate('movies').lean().exec();
     }
 
-    async create(dto: CreateActorDto): Promise<Actor> {
-        const createdFilm = await this.actorModel.create(dto);
-        return createdFilm;
+    async create(dto: createActorDto): Promise<Actor> {
+        return await this.actorModel.create(dto);
     }
 
     async remove(id: ObjectId): Promise<Actor> {
@@ -30,7 +29,7 @@ export class ActorsService {
         return this.actorModel.deleteMany({});
     }
 
-    async addMovieToActor(id: mongoose.Schema.Types.ObjectId, dto: addMovieToActor) {
+    async addMovieToActor(id: mongoose.Schema.Types.ObjectId, dto: updateGlobalDto) {
         return this.actorModel.findByIdAndUpdate(id, { $push: { movies: dto.movies } });
     }
 }

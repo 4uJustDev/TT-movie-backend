@@ -1,17 +1,18 @@
 import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common';
 import mongoose, { ObjectId } from 'mongoose';
-import { MoviesService } from 'src/movies/movies.service';
-import { ActorsService } from './actors.service';
-import { addMovieToActor } from './dto/addMovieToActor.dto';
-import { CreateActorDto } from './dto/create-actor.dto';
+import { MovieService } from 'src/movies/movie.service';
+import { updateGlobalDto } from '../dto/updateGlobal.dto';
+import { ActorService } from './actor.service';
+import { createActorDto } from './dto/createActor.dto';
 import { Actor } from './schemas/actor.schema';
 
-@Controller('actors')
+@Controller('actor')
 export class ActorsController {
     constructor(
-        private readonly actorService: ActorsService,
-        private readonly movieService: MoviesService,
+        private readonly actorService: ActorService,
+        private readonly movieService: MovieService,
     ) {}
+
     @Get()
     getAll(): Promise<Actor[]> {
         return this.actorService.getAll();
@@ -21,8 +22,9 @@ export class ActorsController {
     getOne(@Param('id') id: ObjectId): Promise<Actor> {
         return this.actorService.getById(id);
     }
+
     @Post()
-    create(@Body() actor: CreateActorDto): Promise<Actor> {
+    create(@Body() actor: createActorDto): Promise<Actor> {
         return this.actorService.create(actor);
     }
 
@@ -37,9 +39,9 @@ export class ActorsController {
     }
 
     @Patch(':id')
-    addMovie(@Param('id') id: mongoose.Schema.Types.ObjectId, @Body() dto: addMovieToActor) {
-        this.actorService.addMovieToActor(id, dto);
+    addMovie(@Param('id') id: mongoose.Schema.Types.ObjectId, @Body() dto: updateGlobalDto) {
         dto.actors = id;
+        this.actorService.addMovieToActor(id, dto);
         this.movieService.addActorToMovie(dto.movies, dto);
         return dto;
     }

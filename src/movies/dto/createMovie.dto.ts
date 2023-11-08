@@ -1,4 +1,4 @@
-export class CreateMovieDto {
+export class createMovieDto {
     readonly tittle: string;
 
     readonly description: string;

@@ -1,17 +1,17 @@
 import { Body, Controller, Delete, Get, Param, Patch, Post, Put } from '@nestjs/common';
-import mongoose from 'mongoose';
-import { ActorsService } from 'src/actors/actors.service';
-import { addMovieToActor } from 'src/actors/dto/addMovieToActor.dto';
-import { CreateMovieDto } from './dto/create-movie.dto';
-import { UpdateMovieDto } from './dto/update-movie.dto';
-import { MoviesService } from './movies.service';
+import mongoose, { ObjectId } from 'mongoose';
+import { ActorService } from 'src/actors/actor.service';
+import { updateGlobalDto } from 'src/dto/updateGlobal.dto';
+import { createMovieDto } from './dto/createMovie.dto';
+import { updateMovieDto } from './dto/updateMovie.dto';
+import { MovieService } from './movie.service';
 import { Movie } from './schemas/movie.schema';
 
-@Controller('movies')
-export class MoviesController {
+@Controller('movie')
+export class MovieController {
     constructor(
-        private readonly movieService: MoviesService,
-        private readonly actorService: ActorsService,
+        private readonly movieService: MovieService,
+        private readonly actorService: ActorService,
     ) {}
 
     @Get()
@@ -20,16 +20,17 @@ export class MoviesController {
     }
 
     @Get(':id')
-    getOne(@Param('id') id: number): Promise<Movie> {
+    getOne(@Param('id') id: ObjectId): Promise<Movie> {
         return this.movieService.getById(id);
     }
+
     @Post()
-    create(@Body() film: CreateMovieDto): Promise<Movie> {
+    create(@Body() film: createMovieDto): Promise<Movie> {
         return this.movieService.create(film);
     }
 
     @Put(':id')
-    update(@Body() updateFilmDto: UpdateMovieDto, @Param('id') id: number): Promise<Movie> {
+    update(@Body() updateFilmDto: updateMovieDto, @Param('id') id: number): Promise<Movie> {
         return this.movieService.update(id, updateFilmDto);
     }
 
@@ -44,7 +45,7 @@ export class MoviesController {
     }
 
     @Patch(':id')
-    addActor(@Param('id') id: mongoose.Schema.Types.ObjectId, @Body() dto: addMovieToActor) {
+    addActor(@Param('id') id: mongoose.Schema.Types.ObjectId, @Body() dto: updateGlobalDto) {
         this.movieService.addActorToMovie(id, dto);
         dto.movies = id;
         this.actorService.addMovieToActor(dto.actors, dto);
