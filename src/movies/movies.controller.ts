@@ -1,14 +1,18 @@
 import { Body, Controller, Delete, Get, Param, Patch, Post, Put } from '@nestjs/common';
-import { MoviesService } from './movies.service';
-import { Movie } from './schemas/movie.schema';
+import mongoose from 'mongoose';
+import { ActorsService } from 'src/actors/actors.service';
+import { addMovieToActor } from 'src/actors/dto/addMovieToActor.dto';
 import { CreateMovieDto } from './dto/create-movie.dto';
 import { UpdateMovieDto } from './dto/update-movie.dto';
-import { ObjectId } from 'mongoose';
-import { addMovieToActor } from 'src/actors/dto/addMovieToActor.dto';
+import { MoviesService } from './movies.service';
+import { Movie } from './schemas/movie.schema';
 
 @Controller('movies')
 export class MoviesController {
-    constructor(private readonly movieService: MoviesService) {}
+    constructor(
+        private readonly movieService: MoviesService,
+        private readonly actorService: ActorsService,
+    ) {}
 
     @Get()
     getAll(): Promise<Movie[]> {
@@ -40,7 +44,10 @@ export class MoviesController {
     }
 
     @Patch(':id')
-    addActor(@Param('id') id: ObjectId, @Body() dto: addMovieToActor) {
-        return this.movieService.addActorToMovie(id, dto.actors);
+    addActor(@Param('id') id: mongoose.Schema.Types.ObjectId, @Body() dto: addMovieToActor) {
+        this.movieService.addActorToMovie(id, dto);
+        dto.movies = id;
+        this.actorService.addMovieToActor(dto.actors, dto);
+        return dto;
     }
 }

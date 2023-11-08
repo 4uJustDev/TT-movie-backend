@@ -1,13 +1,17 @@
-import { Module } from '@nestjs/common';
+import { Module, forwardRef } from '@nestjs/common';
+import { MongooseModule } from '@nestjs/mongoose';
+import { MoviesModule } from 'src/movies/movies.module';
 import { ActorsController } from './actors.controller';
 import { ActorsService } from './actors.service';
-import { MongooseModule } from '@nestjs/mongoose';
 import { Actor, ActorSchema } from './schemas/actor.schema';
-import { MoviesModule } from 'src/movies/movies.module';
 
 @Module({
-    imports: [MongooseModule.forFeature([{ name: Actor.name, schema: ActorSchema }]), MoviesModule],
+    imports: [
+        MongooseModule.forFeature([{ name: Actor.name, schema: ActorSchema }]),
+        forwardRef(() => MoviesModule),
+    ],
     controllers: [ActorsController],
     providers: [ActorsService],
+    exports: [ActorsService],
 })
 export class ActorsModule {}

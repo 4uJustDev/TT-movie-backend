@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Actor, ActorDocument } from './schemas/actor.schema';
-import { Model, ObjectId } from 'mongoose';
-import { CreateActorDto } from './dto/create-actor.dto';
+import mongoose, { Model, ObjectId } from 'mongoose';
 import { addMovieToActor } from './dto/addMovieToActor.dto';
+import { CreateActorDto } from './dto/create-actor.dto';
+import { Actor, ActorDocument } from './schemas/actor.schema';
 
 @Injectable()
 export class ActorsService {
@@ -30,7 +30,7 @@ export class ActorsService {
         return this.actorModel.deleteMany({});
     }
 
-    async addMovieToActor(id: ObjectId, dto: addMovieToActor) {
-        return this.actorModel.findByIdAndUpdate(id, { $push: dto });
+    async addMovieToActor(id: mongoose.Schema.Types.ObjectId, dto: addMovieToActor) {
+        return this.actorModel.findByIdAndUpdate(id, { $push: { movies: dto.movies } });
     }
 }

@@ -1,10 +1,10 @@
 import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common';
-import { Actor } from './schemas/actor.schema';
-import { CreateActorDto } from './dto/create-actor.dto';
-import { ActorsService } from './actors.service';
-import { ObjectId } from 'mongoose';
-import { addMovieToActor } from './dto/addMovieToActor.dto';
+import mongoose, { ObjectId } from 'mongoose';
 import { MoviesService } from 'src/movies/movies.service';
+import { ActorsService } from './actors.service';
+import { addMovieToActor } from './dto/addMovieToActor.dto';
+import { CreateActorDto } from './dto/create-actor.dto';
+import { Actor } from './schemas/actor.schema';
 
 @Controller('actors')
 export class ActorsController {
@@ -37,8 +37,10 @@ export class ActorsController {
     }
 
     @Patch(':id')
-    addMovie(@Param('id') id: ObjectId, @Body() dto: addMovieToActor) {
-        this.movieService.addActorToMovie(dto.movies, id);
-        return this.actorService.addMovieToActor(id, dto);
+    addMovie(@Param('id') id: mongoose.Schema.Types.ObjectId, @Body() dto: addMovieToActor) {
+        this.actorService.addMovieToActor(id, dto);
+        dto.actors = id;
+        this.movieService.addActorToMovie(dto.movies, dto);
+        return dto;
     }
 }

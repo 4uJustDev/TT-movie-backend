@@ -1,4 +1,6 @@
+import mongoose from 'mongoose';
+
 export class addMovieToActor {
-    readonly movies: string;
-    readonly actors: string;
+    movies: mongoose.Schema.Types.ObjectId;
+    actors: mongoose.Schema.Types.ObjectId;
 }
