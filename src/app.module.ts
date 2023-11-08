@@ -3,6 +3,7 @@ import { ConfigModule } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ActorModule } from './actors/actor.module';
 import { MovieModule } from './movies/movie.module';
+import { ReviewModule } from './review/review.module';
 
 @Module({
     imports: [
@@ -13,6 +14,7 @@ import { MovieModule } from './movies/movie.module';
         MongooseModule.forRoot(process.env.MONGODB_URI),
         MovieModule,
         ActorModule,
+        ReviewModule,
     ],
 })
 export class AppModule {}
