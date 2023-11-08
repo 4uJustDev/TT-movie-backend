@@ -1,6 +1,6 @@
 import { Body, Controller, Delete, Get, Param, Patch, Post, Put } from '@nestjs/common';
 import mongoose, { ObjectId } from 'mongoose';
-import { ActorService } from 'src/actors/actor.service';
+import { ActorService } from 'src/actor/actor.service';
 import { updateGlobalDto } from 'src/dto/updateGlobal.dto';
 import { createMovieDto } from './dto/createMovie.dto';
 import { updateMovieDto } from './dto/updateMovie.dto';

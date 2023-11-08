@@ -1,6 +1,6 @@
 import { Module, forwardRef } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
-import { MovieModule } from 'src/movies/movie.module';
+import { MovieModule } from 'src/movie/movie.module';
 import { ActorsController } from './actor.controller';
 import { ActorService } from './actor.service';
 import { Actor, ActorSchema } from './schemas/actor.schema';
