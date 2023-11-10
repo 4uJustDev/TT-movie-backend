@@ -4,4 +4,6 @@ export class updateGlobalDto {
     movies: mongoose.Schema.Types.ObjectId;
 
     actors: mongoose.Schema.Types.ObjectId;
+
+    roles: mongoose.Schema.Types.ObjectId;
 }
