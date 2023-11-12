@@ -25,7 +25,7 @@ export class UserController {
 
     @Delete()
     removeDocuments() {
-        return this.userService.removeAll();
+        return this.userService.removeAllUsers();
     }
 
     @Delete(':id')

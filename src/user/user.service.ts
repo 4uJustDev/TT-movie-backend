@@ -56,7 +56,27 @@ export class UserService {
         return this.userModel.findByIdAndRemove(id);
     }
 
-    async removeAll() {
-        return this.userModel.deleteMany({});
+    async removeAllUsers(): Promise<void> {
+        // Find all users
+        const allUsers = await this.userModel.find();
+
+        // Iterate through each user
+        for (const user of allUsers) {
+            const userId = user._id;
+
+            // Update roles to remove the user's ID
+            for (const roleId of user.roles) {
+                const role = await this.roleModel.findById(roleId);
+                if (role) {
+                    role.users = role.users.filter(
+                        (roleUserId) => roleUserId.toString() !== userId.toString(),
+                    );
+                    await role.save();
+                }
+            }
+        }
+
+        // Remove all users
+        await this.userModel.deleteMany({});
     }
 }
