@@ -1,4 +1,7 @@
-import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, UseGuards } from '@nestjs/common';
+import { Role } from 'src/auth/role.enum';
+import { RoleGuard } from 'src/auth/role.guard';
+import { Roles } from 'src/auth/roleAuth.decorator';
 import { createUserDto } from './dto/createUser.dto';
 import { User } from './schemas/user.schema';
 import { UserService } from './user.service';
@@ -6,21 +9,19 @@ import { UserService } from './user.service';
 @Controller('user')
 export class UserController {
     constructor(private userService: UserService) {}
-    //Создание пользователя без JWT
+
     @Post()
     create(@Body() userDto: createUserDto) {
         return this.userService.createUser(userDto);
     }
-    //Получение списка всех пользователей
+
+    //@UseGuards(JwtAuthGuard)
+    @Roles(Role.User, Role.Admin)
+    @UseGuards(RoleGuard)
     @Get()
     getAll() {
         return this.userService.getAllUsers();
     }
-    //Выдача ролей
-    // @Post('role')
-    // addRole(@Body() dto: addRoleDto) {
-    //     return this.userService.addRole(dto);
-    // }
 
     @Delete()
     removeDocuments() {

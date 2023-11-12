@@ -13,7 +13,7 @@ import { UserService } from './user.service';
     imports: [
         MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]),
         MongooseModule.forFeature([{ name: Role.name, schema: RoleSchema }]),
-        forwardRef(() => RoleModule),
+        RoleModule,
         forwardRef(() => AuthModule),
     ],
     exports: [UserService],
