@@ -13,7 +13,5 @@ export class createMovieDto {
 
     readonly trailer_url: string;
 
-    readonly rating_total: number;
-
-    readonly rating_value: number;
+    readonly photos?: { url: string }[];
 }

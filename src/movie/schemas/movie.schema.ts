@@ -34,6 +34,9 @@ export class Movie {
     @Prop({})
     rating_value: number;
 
+    @Prop({ type: [{ url: String }] })
+    photos: { url: string }[];
+
     @Prop({ ref: () => 'Actor', type: [{ type: mongoose.Schema.Types.ObjectId }] })
     actors: Actor[];
 
