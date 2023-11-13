@@ -1,6 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import mongoose, { HydratedDocument } from 'mongoose';
 import { Actor } from 'src/actor/schemas/actor.schema';
+import { Review } from 'src/review/schemas/review.schema';
 
 export type MovieDocument = HydratedDocument<Movie>;
 
@@ -35,6 +36,9 @@ export class Movie {
 
     @Prop({ ref: () => 'Actor', type: [{ type: mongoose.Schema.Types.ObjectId }] })
     actors: Actor[];
+
+    @Prop({ ref: () => 'Review', type: [{ type: mongoose.Schema.Types.ObjectId }] })
+    reviews: Review[];
 }
 
 export const MovieSchema = SchemaFactory.createForClass(Movie);

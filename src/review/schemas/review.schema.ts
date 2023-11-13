@@ -1,6 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import mongoose, { HydratedDocument } from 'mongoose';
 import { Movie } from 'src/movie/schemas/movie.schema';
+import { User } from 'src/user/schemas/user.schema';
 
 export type ReviewDocument = HydratedDocument<Review>;
 
@@ -15,11 +16,11 @@ export class Review {
     @Prop({})
     release_date: Date;
 
-    @Prop({ ref: () => 'Movie', type: [{ type: mongoose.Schema.Types.ObjectId }] })
+    @Prop({ ref: () => 'Movie', type: mongoose.Schema.Types.ObjectId })
     movie: Movie;
 
-    // @Prop({ ref: () => 'User', type: [{ type: mongoose.Schema.Types.ObjectId }] })
-    // user: User;
+    @Prop({ ref: () => 'User', type: mongoose.Schema.Types.ObjectId })
+    user: User;
 }
 
 export const ReviewSchema = SchemaFactory.createForClass(Review);
