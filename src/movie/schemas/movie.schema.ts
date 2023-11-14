@@ -23,7 +23,7 @@ export class Movie {
     plot: string;
 
     @Prop({})
-    poster_url: string;
+    poster: string;
 
     @Prop({})
     trailer_url: string;
