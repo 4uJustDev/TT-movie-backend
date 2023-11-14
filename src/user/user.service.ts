@@ -56,7 +56,7 @@ export class UserService {
         return this.userModel.findByIdAndRemove(id);
     }
 
-    async removeAllUsers(): Promise<void> {
+    async removeAllUsers() {
         // Find all users
         const allUsers = await this.userModel.find();
 
@@ -77,6 +77,6 @@ export class UserService {
         }
 
         // Remove all users
-        await this.userModel.deleteMany({});
+        return this.userModel.deleteMany({});
     }
 }

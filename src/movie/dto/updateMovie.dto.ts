@@ -1,5 +1,11 @@
-export class updateMovieDto {
-    readonly tittle: string;
+import { IsOptional, IsString } from 'class-validator';
 
-    readonly description: string;
+export class updateMovieDto {
+    @IsOptional()
+    @IsString({ message: 'Title must be a string.' })
+    readonly title?: string;
+
+    @IsOptional()
+    @IsString({ message: 'Description must be a string.' })
+    readonly description?: string;
 }

@@ -1,9 +1,12 @@
-import mongoose from 'mongoose';
+import { IsMongoId, IsString } from 'class-validator';
 
 export class createReviewDto {
+    @IsString({ message: 'Rating must be a string.' })
     readonly rating: string;
 
-    readonly message: Date;
+    @IsString({ message: 'Message must be a string.' })
+    readonly message: string;
 
-    readonly movie: mongoose.Schema.Types.ObjectId;
+    @IsMongoId({ message: 'Invalid movie ID.' })
+    readonly movie: string;
 }
