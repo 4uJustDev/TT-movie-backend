@@ -1,5 +1,5 @@
 import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common';
-import mongoose, { ObjectId } from 'mongoose';
+import { ObjectId } from 'mongoose';
 import { MovieService } from 'src/movie/movie.service';
 import { updateGlobalDto } from '../dto/updateGlobal.dto';
 import { ActorService } from './actor.service';
@@ -39,7 +39,9 @@ export class ActorsController {
     }
 
     @Patch(':id')
-    addMovie(@Param('id') id: mongoose.Schema.Types.ObjectId, @Body() dto: updateGlobalDto) {
+    addMovie(@Param('id') id: string, @Body() dto: updateGlobalDto) {
+        // console.log(dto);
+        // console.log(id);
         dto.actors = id;
         this.actorService.addMovieToActor(id, dto);
         this.movieService.addActorToMovie(dto.movies, dto);

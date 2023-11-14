@@ -1,4 +1,4 @@
-import { IsMongoId, IsString } from 'class-validator';
+import { IsString } from 'class-validator';
 
 export class createReviewDto {
     @IsString({ message: 'Rating must be a string.' })
@@ -6,7 +6,4 @@ export class createReviewDto {
 
     @IsString({ message: 'Message must be a string.' })
     readonly message: string;
-
-    @IsMongoId({ message: 'Invalid movie ID.' })
-    readonly movie: string;
 }

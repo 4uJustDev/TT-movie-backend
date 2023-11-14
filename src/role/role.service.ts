@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model, ObjectId } from 'mongoose';
+import { Model } from 'mongoose';
 import { createRoleDto } from './dto/createRole.dto';
 import { Role, RoleDocument } from './schemas/role.schema';
 
@@ -12,7 +12,7 @@ export class RoleService {
         return await this.roleModel.create(dto);
     }
 
-    async getById(id: ObjectId): Promise<Role> {
+    async getById(id: string): Promise<Role> {
         return await this.roleModel.findById(id).populate('users').lean().exec();
     }
 

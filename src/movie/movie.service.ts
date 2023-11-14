@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import mongoose, { Model, ObjectId } from 'mongoose';
+import { Model } from 'mongoose';
 import { updateGlobalDto } from 'src/dto/updateGlobal.dto';
 import { createMovieDto } from './dto/createMovie.dto';
 import { updateMovieDto } from './dto/updateMovie.dto';
@@ -14,7 +14,7 @@ export class MovieService {
         return await this.movieModel.find().exec();
     }
 
-    async getById(id: ObjectId): Promise<Movie> {
+    async getById(id: string): Promise<Movie> {
         return await this.movieModel.findById(id).populate('actors').lean().exec();
     }
 
@@ -22,11 +22,11 @@ export class MovieService {
         return await this.movieModel.create(dto);
     }
 
-    async update(id: number, dto: updateMovieDto): Promise<Movie> {
+    async update(id: string, dto: updateMovieDto): Promise<Movie> {
         return this.movieModel.findByIdAndUpdate(id, dto);
     }
 
-    async remove(id: number): Promise<Movie> {
+    async remove(id: string): Promise<Movie> {
         return this.movieModel.findByIdAndRemove(id);
     }
 
@@ -34,7 +34,7 @@ export class MovieService {
         return this.movieModel.deleteMany({});
     }
 
-    async addActorToMovie(id: mongoose.Schema.Types.ObjectId, dto: updateGlobalDto) {
+    async addActorToMovie(id: string, dto: updateGlobalDto) {
         return this.movieModel.findByIdAndUpdate(id, { $push: { actors: dto.actors } });
     }
 }

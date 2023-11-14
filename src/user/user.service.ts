@@ -32,7 +32,7 @@ export class UserService {
         return await this.userModel.findOne({ email });
     }
 
-    async remove(id: number): Promise<User> {
+    async remove(id: string): Promise<User> {
         const user = await this.userModel.findById(id);
 
         if (!user) {

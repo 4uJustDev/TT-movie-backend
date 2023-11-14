@@ -1,16 +1,15 @@
 import { IsMongoId, IsOptional } from 'class-validator';
-import mongoose from 'mongoose';
 
 export class updateGlobalDto {
     @IsOptional()
     @IsMongoId({ message: 'Invalid movie ID.' })
-    movies: mongoose.Schema.Types.ObjectId;
+    movies: string;
 
     @IsOptional()
     @IsMongoId({ message: 'Invalid actor ID.' })
-    actors: mongoose.Schema.Types.ObjectId;
+    actors: string;
 
     @IsOptional()
     @IsMongoId({ message: 'Invalid role ID.' })
-    roles: mongoose.Schema.Types.ObjectId;
+    roles: string;
 }
