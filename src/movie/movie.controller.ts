@@ -10,13 +10,13 @@ import {
     UploadedFile,
     UseInterceptors,
 } from '@nestjs/common';
+import { FileInterceptor } from '@nestjs/platform-express';
 import { ActorService } from 'src/actor/actor.service';
 import { updateGlobalDto } from 'src/dto/updateGlobal.dto';
 import { createMovieDto } from './dto/createMovie.dto';
 import { updateMovieDto } from './dto/updateMovie.dto';
 import { MovieService } from './movie.service';
 import { Movie } from './schemas/movie.schema';
-import { FileInterceptor } from '@nestjs/platform-express';
 
 @Controller('movie')
 export class MovieController {
